@@ -141,7 +141,7 @@ static NSString* toBase64(NSData* data) {
     self.hasPendingOperation = YES;
     __weak CDVCamera* weakSelf = self;
 
-    [self.commandDelegate runInBackground:^{
+//    [self.commandDelegate runInBackground:^{
         CDVPictureOptions* pictureOptions = [CDVPictureOptions createFromTakePictureArguments:command];
         pictureOptions.popoverSupported = [weakSelf popoverSupported];
         pictureOptions.usesGeolocation = [weakSelf usesGeolocation];
@@ -162,7 +162,7 @@ static NSString* toBase64(NSData* data) {
                  if(!granted)
                  {
                      // Denied; show an alert
-                     dispatch_async(dispatch_get_main_queue(), ^{
+//                     dispatch_async(dispatch_get_main_queue(), ^{
                          UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"] message:NSLocalizedString(@"Access to the camera has been prohibited; please enable it in the Settings app to continue.", nil) preferredStyle:UIAlertControllerStyleAlert];
                          [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                              [weakSelf sendNoPermissionResult:command.callbackId];
@@ -172,7 +172,7 @@ static NSString* toBase64(NSData* data) {
                              [weakSelf sendNoPermissionResult:command.callbackId];
                          }]];
                          [weakSelf.viewController presentViewController:alertController animated:YES completion:nil];
-                     });
+//                     });
                  } else {
                      [weakSelf showCameraPicker:command.callbackId withOptions:pictureOptions];
                  }
@@ -180,7 +180,7 @@ static NSString* toBase64(NSData* data) {
         } else {
             [weakSelf showCameraPicker:command.callbackId withOptions:pictureOptions];
         }
-    }];
+//    }];
 }
 
 - (void)showCameraPicker:(NSString*)callbackId withOptions:(CDVPictureOptions *) pictureOptions
